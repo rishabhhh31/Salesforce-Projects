@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Train Info-Running Status" icon-name="custom:custom36">
+        <div class="slds-grid slds-gutters slds-var-p-around_medium slds-grid_vertical-align-center">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input lwc:ref="train" message-when-pattern-mismatch="train number must be a number"
+                    pattern="^\d+$" variant="label-hidden" label="Enter Train Number" placeholder="Enter Train Number"
+                    onchange={handleChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <lightning-button label="Check Train Status" onclick={checkStatus} variant="brand"></lightning-button>
+            </div>
+        </div>
+        <template lwc:if={showTrainName}>
+            <div class="slds-var-p-around_small slds-text-heading_medium slds-text-color_success">{trainName}</div>
+            <div class="slds-var-p-around_small">{lastUpdates}</div>
+        </template>
+        <template lwc:elseif={isError}>
+            <div class="slds-var-p-around_small slds-text-heading_medium slds-text-color_error">{errorMessage}</div>
+        </template>
+        <div class="maximum">
+            <lightning-datatable onrowselection={handleRowSelection} is-loading={loading} key-field="Id"
+                columns={columns} data={trainStatus}></lightning-datatable>
+            <div if:true={loading}>
+                <lightning-spinner variant="brand" alternative-text="Loading Cases" size="medium">
+                </lightning-spinner>
+            </div>
+        </div>
+    </lightning-card>
+</template>
