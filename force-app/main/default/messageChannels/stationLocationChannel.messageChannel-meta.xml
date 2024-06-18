@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This channel is used to share station locations</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>This field contains location of the selected location.</description>
+        <fieldName>locations</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>This field contains number of the selected train.</description>
+        <fieldName>trainNumber</fieldName>
+    </lightningMessageFields>
+    <masterLabel>StationLocationChannel</masterLabel>
+</LightningMessageChannel>
