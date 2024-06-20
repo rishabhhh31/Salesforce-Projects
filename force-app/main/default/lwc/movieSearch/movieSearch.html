@@ -1,0 +1,33 @@
+<template>
+    <lightning-card>
+        <div class="slds-box slds-theme_shade slds-var-m-around_small search-border">
+            <lightning-layout horizontal-align="spread">
+                <lightning-layout-item size="3">
+                    <lightning-combobox onchange={typeChangeHandler} name="type" label="Type" value="movieType"
+                        placeholder="Select type" options={typeOptions}></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input is-loading={loading} onchange={searchMovieHandler} name="search"
+                        label="Enter Search Item" type="search"
+                        placeholder="Enter Movie, Series, Episode Name"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="2">
+                    <lightning-input name="page" onchange={searchMovieHandler} value={pageNumber} label="Page"
+                        field-level-help="Range 1-100" type="number"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <template lwc:if={showMovieBox}>
+            <div class="slds-scrollable_y slds-var-m-around_small movie-box">
+                <lightning-layout multiple-rows="true" horizontal-align="center">
+                    <template for:each={movieDetails} for:item="movie">
+                        <lightning-layout-item key={movie.imdbID} size="3" padding="around-small">
+                            <c-movie-tile selected-movie={selectedMovieId} onselected={selectedMovieHandler}
+                                movie={movie}></c-movie-tile>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,28 @@
+.selected-movie {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+.poster {
+    max-width: 240px;
+    border: 2px solid white;
+}
+
+b {
+    color: #fbbc04;
+    font-style: italic;
+}
+
+.flex-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movie-details {
+    max-width: 210px;
+}

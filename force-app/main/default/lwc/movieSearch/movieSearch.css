@@ -1,0 +1,9 @@
+.search-border {
+    border: 2px solid black;
+}
+
+.movie-box {
+    background-color: black;
+    max-height: 600px;
+    color: white;
+}

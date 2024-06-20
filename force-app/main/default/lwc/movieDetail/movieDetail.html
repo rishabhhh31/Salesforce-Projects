@@ -1,0 +1,26 @@
+<template>
+    <div if:true={isLoading} style="height: 200px; position:relative">
+        <lightning-spinner variant="base" size="medium"></lightning-spinner>
+    </div>
+    <template if:true={showMovieDetails}>
+        <div class="slds-var-p-around_medium selected-movie">
+            <div class="slds-grid slds-gutters flex-display">
+                <div class="slds-col poster">
+                    <img src={selectedMovie.Poster} alt={selectedMovie.Title}>
+                </div>
+                <div class="slds-col movie-details">
+                    <h1 class="slds-var-p-around_small slds-text-heading_medium slds-align_absolute-center">
+                        {selectedMovie.Title}</h1>
+                    <p><b>Year</b>: {selectedMovie.Year}</p>
+                    <p><b>Released</b>: {selectedMovie.Released}</p>
+                    <p><b>Genre</b>: {selectedMovie.Genre}</p>
+                    <p><b>Writer</b>: {selectedMovie.Writer}</p>
+                    <p><b>Actors</b>: {selectedMovie.Actors}</p>
+                    <p><b>Plot</b>: {selectedMovie.Plot}</p>
+                    <p><b>Language</b>: {selectedMovie.Language}</p>
+                    <p><b>Awards</b>: {selectedMovie.Awards}</p>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

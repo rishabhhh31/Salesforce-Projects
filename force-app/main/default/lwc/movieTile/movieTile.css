@@ -1,0 +1,21 @@
+.tile {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: #463f3f7a;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    height: 7vh;
+}
+
+.selected {
+    border: 2px solid red;
+}
