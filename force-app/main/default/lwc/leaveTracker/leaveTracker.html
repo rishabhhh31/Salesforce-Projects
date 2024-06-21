@@ -1,0 +1,12 @@
+<template>
+    <lightning-card>
+        <lightning-tabset variant="scoped">
+            <lightning-tab label="My Leaves" title="My Leaves">
+                <c-my-leaves onsubordinate={refreshLeaveHandler}></c-my-leaves>
+            </lightning-tab>
+            <lightning-tab label="Leave Request" title="Leave Request">
+                <c-leave-requests lwc:ref="myLeavesComp"></c-leave-requests>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>
