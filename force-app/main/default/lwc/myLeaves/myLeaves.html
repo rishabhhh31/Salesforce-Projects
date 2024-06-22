@@ -6,6 +6,13 @@
         <lightning-datatable onrowaction={handleRowAction} hide-checkbox-column key-field="Id" data={myLeaves}
             columns={columns}>
         </lightning-datatable>
+        <template if:true={noLeaves}>
+            <div
+                class="slds-text-color_error slds-var-m-around_small slds-text-heading_medium slds-align_absolute-center">
+                No leaves applied
+                by
+                you.</div>
+        </template>
 
         <template if:true={showModal}>
             <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"

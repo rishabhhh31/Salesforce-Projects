@@ -113,7 +113,8 @@ export default class MyLeaves extends LightningElement {
         refreshApex(this.myLeavesResult);
         this.showModal = false;
         this.showToast('Success', 'success', 'Request created successfully.');
-        this.dispatchEvent(new CustomEvent('subordinate', { bubbles: true }));
+        const refreshEvent = new CustomEvent('refreshleaverequests');
+        this.dispatchEvent(refreshEvent);
     }
 
     submitHandler(event) {
@@ -138,5 +139,9 @@ export default class MyLeaves extends LightningElement {
             message: message
         });
         this.dispatchEvent(event);
+    }
+
+    get noLeaves() {
+        return this.myLeaves.length == 0;
     }
 }

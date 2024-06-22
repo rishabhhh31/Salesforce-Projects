@@ -137,4 +137,8 @@ export default class LeaveRequests extends LightningElement {
         });
         this.dispatchEvent(event);
     }
+
+    get noLeaveRequest() {
+        return this.subordinates.length == 0;
+    }
 }
