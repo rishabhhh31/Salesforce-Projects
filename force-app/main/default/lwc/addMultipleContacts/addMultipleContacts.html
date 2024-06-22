@@ -1,0 +1,41 @@
+<template>
+    <lightning-quick-action-panel header="Add Multiple Contacts">
+        <lightning-spinner if:true={isLoading} variant="brand" size="small"></lightning-spinner>
+        <table>
+            <thead>
+                <th>First Name</th>
+                <th>Last Name<span class="slds-text-color_error">*</span></th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th><lightning-button-icon icon-name="utility:add" onclick={addContactHandler}></lightning-button-icon>
+                </th>
+            </thead>
+            <tbody>
+                <template if:true={showContactsList} for:each={contactCount} for:item="con">
+                    <tr key={con.tempId}>
+                        <td><lightning-input name="FirstName" data-temp-id={con.tempId} onblur={contactChangeHandler}
+                                placeholder="Enter First Name" label="First Name"
+                                variant="label-hidden"></lightning-input></td>
+                        <td><lightning-input required="true" name="LastName" data-temp-id={con.tempId}
+                                onblur={contactChangeHandler} placeholder="Enter Last Name" label="Last Name"
+                                variant="label-hidden"></lightning-input></td>
+                        <td><lightning-input pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                                message-when-pattern-mismatch="Enter email in correct format" name="Email"
+                                data-temp-id={con.tempId} onblur={contactChangeHandler} placeholder="Enter Email"
+                                type="email" label="Email" variant="label-hidden"></lightning-input></td>
+                        <td><lightning-combobox data-temp-id={con.tempId} onblur={contactChangeHandler}
+                                variant="label-hidden" name="GenderIdentity" label="Gender" placeholder="Select Gender"
+                                options={genderPicklistSet}></lightning-combobox></td>
+                        <td><lightning-button-icon data-temp-id={con.tempId} icon-name="utility:delete"
+                                onclick={deleteContactHandler}></lightning-button-icon></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <div slot="footer">
+            <lightning-button variant="brand" label="Submit" onclick={submitHandler}
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>
