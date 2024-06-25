@@ -32,5 +32,4 @@ public with sharing class MovieSearchHandler {
             throw new AuraHandledException(e.getMessage());
         }
     }
-    //http://www.omdbapi.com/?i=tt0944947&apikey=9ec90000
 }
