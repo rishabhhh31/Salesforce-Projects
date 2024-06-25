@@ -6,7 +6,8 @@ import CONTACT_OBJECT from "@salesforce/schema/Contact";
 import LEAD_SOURCE from "@salesforce/schema/Contact.LeadSource";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { deleteRecord } from 'lightning/uiRecordApi';
-import getContactRelatedAccount from '@salesforce/apex/CustomDatatableController.getContactRelatedAccount';
+// import getContactRelatedAccount from '@salesforce/apex/CustomDatatableController.getContactRelatedAccount';
+import getContactRelatedAccountWrapper from '@salesforce/apex/CustomDatatableController.getContactRelatedAccountWrapper';
 
 const ACTIONS = [
     { label: 'View', name: 'view' },
@@ -22,6 +23,12 @@ const COLUMN = [
     { label: 'Title', fieldName: 'Title', editable: true, hideDefaultActions: true },
     { label: 'Email', fieldName: 'Email', type: 'email', editable: true, hideDefaultActions: true },
     { label: 'Phone', fieldName: 'Phone', type: 'phone', editable: true, hideDefaultActions: true },
+    { label: 'Is Bad Contact', fieldName: 'isBadContact', displayReadOnlyIcon: true, type: 'boolean', hideDefaultActions: true },
+    {
+        label: 'Total Cases', fieldName: 'noOfCase', displayReadOnlyIcon: true, type: 'number', hideDefaultActions: true, cellAttributes: {
+            alignment: 'center'
+        }
+    },
     {
         label: 'Lead Source', fieldName: 'LeadSource', type: 'customPicklistType', editable: true, typeAttributes: {
             options: { fieldName: 'leadOptions' }
@@ -44,6 +51,8 @@ export default class EditDatatable extends LightningElement {
     isEdit;
     showDatatable = false;
     contactData = [];
+    disableBtn = true;
+    selectedContacts = [];
 
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactObjectInfo({ data, error }) {
@@ -76,7 +85,7 @@ export default class EditDatatable extends LightningElement {
         }
     }
 
-    @wire(getContactRelatedAccount, { accId: '$recordId', leadSource: '$leadSource' })
+    @wire(getContactRelatedAccountWrapper, { accId: '$recordId', leadSource: '$leadSource' })
     getRelatedContacts(result) {
         this.contactResult = result;
         if (result.data) {
@@ -155,5 +164,35 @@ export default class EditDatatable extends LightningElement {
         })
         this.columns = [...cols];
         this.contactData = [...filterContacts];
+    }
+
+    handleRowSelection(event) {
+        this.disableBtn = !(event.detail.selectedRows.length > 0);
+        this.selectedContacts = [...event.detail.selectedRows];
+    }
+
+    async deleteContactHandler() {
+        if (!this.checkValidity()) {
+            this.showToastMessage('Error', 'Contact contains active cases.', 'error')
+            return;
+        }
+        try {
+            const deleteContactPromise = this.selectedContacts.map((con) => {
+                return deleteRecord(con.Id);
+            })
+            await Promise.all(deleteContactPromise);
+            await refreshApex(this.contactResult);
+            this.showToastMessage('Deleted', 'Contacts Deleted Successfully', 'success');
+        }
+        catch (error) {
+            this.showToastMessage('Error', error?.body?.message, 'error');
+        }
+    }
+
+    checkValidity() {
+        const isValid = this.selectedContacts.reduce((valid, con) => {
+            return valid && con.noOfCase == 0;
+        }, true)
+        return isValid;
     }
 }

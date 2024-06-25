@@ -1,11 +1,18 @@
 <template>
-    <div style="max-height: 200px;">
-        <c-custom-data-type if:true={showTable} onheaderaction={handleHeaderAction} onrowaction={handleRowAction}
-            draft-values={draftValues} show-row-number-column key-field="Id" data={contactData} columns={columns}
-            onsave={handleSave}></c-custom-data-type>
-        <template lwc:if={showModal}>
-            <c-custom-modal-datatable is-edit={isEdit} contact-id={contactId}
-                onclose={modalCloseHandler}></c-custom-modal-datatable>
-        </template>
-    </div>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+            <lightning-button variant="destructive" label="Delete Multiple Contacts" onclick={deleteContactHandler}
+                disabled={disableBtn}></lightning-button>
+        </div>
+        <div style="max-height: 200px;">
+            <c-custom-data-type onrowselection={handleRowSelection} if:true={showTable}
+                onheaderaction={handleHeaderAction} onrowaction={handleRowAction} draft-values={draftValues}
+                show-row-number-column key-field="Id" data={contactData} columns={columns}
+                onsave={handleSave}></c-custom-data-type>
+            <template lwc:if={showModal}>
+                <c-custom-modal-datatable is-edit={isEdit} contact-id={contactId}
+                    onclose={modalCloseHandler}></c-custom-modal-datatable>
+            </template>
+        </div>
+    </lightning-card>
 </template>
