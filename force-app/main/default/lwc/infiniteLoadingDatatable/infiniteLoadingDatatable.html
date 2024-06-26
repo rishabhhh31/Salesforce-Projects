@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Account Summary" icon-name="standard:account">
+        <p class="slds-var-p-around_small slds-page-header__name-meta">Total Rows: {totalRows} • Rows Loaded:
+            {currentCount}</p>
+        <div class="slds-var-p-around_small" style="height: 250px">
+            <lightning-datatable hide-checkbox-column columns={columns} data={accounts} key-field="Id"
+                enable-infinite-loading onloadmore={loadMoreData}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
