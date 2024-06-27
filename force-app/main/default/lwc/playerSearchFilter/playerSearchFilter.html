@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Find a Cricketer">
+        <lightning-button slot="actions" label="New Cricketer" onclick={handleNewCricketer}>
+        </lightning-button>
+
+        <div class="slds-align_absolute-center">
+            <lightning-combobox name="nationality" label="Nationality" variant="label-hidden"
+                value={selectedNationality} placeholder="Select nationality" options={nationality}
+                onchange={handleNationalityChange}></lightning-combobox>
+        </div>
+    </lightning-card>
+    <div class="slds-var-m-top_small"></div>
+    <c-player-search-result country={selectedNationality}></c-player-search-result>
+</template>

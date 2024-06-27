@@ -1,0 +1,13 @@
+img {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    height: 450px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+}

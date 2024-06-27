@@ -1,0 +1,19 @@
+<template>
+    <lightning-card icon-name="custom:custom12" title={selectedPlayerTitle}>
+        <template if:true={playerAvaiable}>
+            <lightning-button-icon icon-name="utility:expand_alt" onclick={openPlayerDetails} slot="actions"
+                variant="border-filled"></lightning-button-icon>
+            <div class="slds-var-p-around_medium">
+                <img src={player.Image_URL__c}>
+                <h1 class="slds-var-m-bottom_small">Player Details</h1>
+                <p>{player.Name}</p>
+                <p>{player.Age__c}</p>
+                <p>{player.Runs__c}</p>
+                <p>{player.Nationality__c}</p>
+            </div>
+        </template>
+        <template if:false={playerAvaiable}>
+            <div class="slds-text-heading_medium slds-align_absolute-center">Select player to see detail.</div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,12 @@
+img {
+    height: 250px;
+    margin-bottom: 5px;
+}
+
+.player-card {
+    cursor: pointer;
+}
+
+.selected {
+    border: 3px solid rgb(0, 85, 255);
+}
