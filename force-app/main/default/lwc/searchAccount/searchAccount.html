@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title={title}>
+        <lightning-layout horizontal-align="center">
+            <lightning-layout-item size="10" padding="around-small">
+                <lightning-input is-loading={isLoading} placeholder="Enter account name" variant="label-hidden"
+                    label="Enter account name" type="search" onchange={searchAccountHandler}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

@@ -1,0 +1,9 @@
+<template>
+    <lightning-card>
+        <div style={datatableHeight} class="slds-table_col-bordered slds-table_bordered slds-var-m-around_small">
+            <lightning-datatable show-row-number-column hide-checkbox-column onrowaction={handleRowAction}
+                key-field="Id" data={accounts} columns={columns}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

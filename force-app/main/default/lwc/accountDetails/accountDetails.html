@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title={title}>
+        <template if:true={accountAvailable}>
+            <div slot="actions">
+                <lightning-button-icon title="Create Contact" icon-name="utility:add"
+                    onclick={newContactHandler}></lightning-button-icon>
+            </div>
+            <template lwc:if={showDetails}>
+                <div class="slds-var-p-around_medium">
+                    <template for:each={contacts} for:item="con">
+                        <div key={con.Id} class="slds-var-m-bottom_small slds-box slds-theme_shade">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-text-heading_small slds-col slds-size_2-of-3">
+                                    <span>{con.Name}</span>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-button-icon class="slds-var-m-right_small" title="Edit Contact"
+                                        icon-name="utility:edit" onclick={editContactHandler}
+                                        data-record-id={con.Id}></lightning-button-icon>
+                                    <lightning-button-icon title="Delete Contact" icon-name="utility:delete"
+                                        onclick={deleteContact} data-record-id={con.Id}></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="slds-align_absolute-center slds-text-heading_small">No Contacts found</div>
+            </template>
+        </template>
+        <template if:false={accountAvailable}>
+            <div class="slds-align_absolute-center slds-text-heading_small">Select a account to view contacts.</div>
+        </template>
+    </lightning-card>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="close-btn slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <lightning-button-icon size="large" variant="container" icon-name="utility:close"
+                        onclick={closeHandler}></lightning-button-icon>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">{modalTitle}</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-record-edit-form onsuccess={successHandler} object-api-name={objectApiName}
+                        record-id={contactId}>
+                        <lightning-input-field field-name="AccountId" value={accountId}></lightning-input-field>
+                        <lightning-input-field field-name="FirstName"></lightning-input-field>
+                        <lightning-input-field field-name="LastName"></lightning-input-field>
+                        <lightning-input-field field-name="Email"></lightning-input-field>
+                        <lightning-input-field field-name="Phone"></lightning-input-field>
+                        <div class="slds-var-m-top_medium slds-align_absolute-center">
+                            <lightning-button class="slds-var-m-right_small" type="submit" label="Save">
+                            </lightning-button>
+                            <lightning-button onclick={closeHandler} type="button" label="Cancel">
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

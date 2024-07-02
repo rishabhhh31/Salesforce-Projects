@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This channel is used to share account contact details.</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>This field contains information of the account detail.</description>
+        <fieldName>account</fieldName>
+    </lightningMessageFields>
+    <masterLabel>AccountContactChannel</masterLabel>
+</LightningMessageChannel>
