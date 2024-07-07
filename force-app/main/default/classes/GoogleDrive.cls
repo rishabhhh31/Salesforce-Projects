@@ -29,14 +29,13 @@ public class GoogleDrive {
     }
     
     @AuraEnabled
-    public static Blob getFileDetails(String fileId){
+    public static String getFileDetails(String fileId){
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:NamedDrive/files/'+fileId+'?alt=media&mimeType=application/pdf');
+        req.setEndpoint('callout:NamedDrive/files/'+fileId+'?alt=media&supportsAllDrives=true');
         req.setMethod('GET');
         req.setTimeout(120000);
         HttpResponse res = new Http().send(req);
-        System.debug(res.getBody());
-        return res.getBodyAsBlob();
+        return res.getBody();
     }
     
     @AuraEnabled

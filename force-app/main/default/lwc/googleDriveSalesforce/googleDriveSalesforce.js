@@ -2,6 +2,7 @@ import { LightningElement, wire } from 'lwc';
 import getFiles from '@salesforce/apex/GoogleDrive.getFiles';
 import deleteFile from '@salesforce/apex/GoogleDrive.deleteFile';
 import createFile from '@salesforce/apex/GoogleDrive.createFile';
+import getFileDetails from '@salesforce/apex/GoogleDrive.getFileDetails';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 const actions = [
@@ -47,7 +48,7 @@ export default class GoogleDriveSalesforce extends LightningElement {
         return this.driveFiles?.length > 8 ? 'height:250px' : '';
     }
 
-    handleRowAction(event) {
+    async handleRowAction(event) {
         let action = event.detail.action.name;
         let row = event.detail.row;
         if (action == 'download') {
@@ -60,9 +61,9 @@ export default class GoogleDriveSalesforce extends LightningElement {
             a.click();
             this.isLoading = false;
         } else if (action == 'delete') {
-            this.deleteFileHandler(row.id, row.name);
+            this.deleteFileHandler(row.id);
         } else if (action == 'view') {
-            window.open(row.webViewLink, '_self')
+            window.open(row.webViewLink, '_blank')
         }
     }
 
@@ -93,11 +94,14 @@ export default class GoogleDriveSalesforce extends LightningElement {
     }
     fileUploadHandler(event) {
         let files = [...event.detail.files];
+        if (files.length == 0) {
+            this.fileUploadName = '';
+        }
         files.forEach(f => {
             this.fileUploadName = f.name;
             const fileReader = new FileReader();
             fileReader.onloadend = async () => {
-                this.fileData.fileBody = fileReader.result.split(',')[1];;
+                this.fileData.fileBody = fileReader.result.split(',')[1];
                 this.fileData.fileName = f.name;
                 this.fileData.fileType = f.type;
             };
@@ -115,9 +119,9 @@ export default class GoogleDriveSalesforce extends LightningElement {
             let response = await createFile({ fileName: this.fileData.fileName, fileBody: this.fileData.fileBody, fileType: this.fileData.fileType })
             let data = JSON.parse(response);
             if (data.id) {
-                this.showToast('File Uploaded Successfully', '', 'success');
                 await refreshApex(this.driveData);
                 this.fileUploadName = '';
+                this.showToast('File Uploaded Successfully', '', 'success');
             } else {
                 this.showToast('Something went wrong', '', 'error');
             }
